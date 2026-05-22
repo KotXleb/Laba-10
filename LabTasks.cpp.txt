@@ -1,0 +1,96 @@
+#include "LabTasks.h"
+#include <iostream>
+#include <iomanip>
+#include <cmath> // Для функції std::abs
+
+using namespace std;
+
+
+
+// Перевірка коректності часу для Param76
+bool IsTimeValid(TTime T) {
+    return (T.Hour >= 0 && T.Hour <= 23) &&
+        (T.Min >= 0 && T.Min <= 59) &&
+        (T.Sec >= 0 && T.Sec <= 59);
+}
+
+// Param76: Додавання 1 секунди
+void NextSec(TTime& T) {
+    if (!IsTimeValid(T)) return;
+
+    T.Sec++;
+    if (T.Sec >= 60) {
+        T.Sec = 0;
+        T.Min++;
+        if (T.Min >= 60) {
+            T.Min = 0;
+            T.Hour++;
+            if (T.Hour >= 24) {
+                T.Hour = 0;
+            }
+        }
+    }
+}
+
+// Begin16: Обчислення відстані |x2 - x1|
+double GetDistance(double x1, double x2) {
+    return abs(x2 - x1);
+}
+
+// Boolean17: Перевірка, чи число є непарним тризначним
+bool IsOddThreeDigit(int num) {
+    // Тризначне число лежить в межах від 100 до 999, а непарне — не ділиться на 2 без залишку
+    return (num >= 100 && num <= 999) && (num % 2 != 0);
+}
+
+// функції для меню 
+
+void RunParam76() {
+    cout << "\n--- Виконання завдання Param76 ---" << endl;
+    TTime times[5];
+    for (int i = 0; i < 5; i++) {
+        cout << "Введіть час " << i + 1 << " (Години Хвилини Секунди через пробіл): ";
+        cin >> times[i].Hour >> times[i].Min >> times[i].Sec;
+
+        bool wasValid = IsTimeValid(times[i]);
+        NextSec(times[i]);
+
+        if (wasValid) {
+            cout << "Час +1 сек: "
+                << setfill('0') << setw(2) << times[i].Hour << ":"
+                << setfill('0') << setw(2) << times[i].Min << ":"
+                << setfill('0') << setw(2) << times[i].Sec << endl;
+        }
+        else {
+            cout << "Некоректний час! Значення не змінено." << endl;
+        }
+    }
+}
+
+void RunBegin16() {
+    cout << "\n--- Виконання завдання Begin16 ---" << endl;
+    double x1, x2;
+    cout << "Введіть координату x1: ";
+    cin >> x1;
+    cout << "Введіть координату x2: ";
+    cin >> x2;
+
+    double distance = GetDistance(x1, x2);
+    cout << "Відстань між точками |" << x2 << " - " << x1 << "| = " << distance << endl;
+}
+
+void RunBoolean17() {
+    cout << "\n--- Виконання завдання Boolean17 ---" << endl;
+    int num;
+    cout << "Введіть ціле позитивне число: ";
+    cin >> num;
+
+    if (num <= 0) {
+        cout << "Помилка: число має бути позитивним (більшим за 0)!" << endl;
+        return;
+    }
+
+    bool result = IsOddThreeDigit(num);
+    cout << "Твердження «Число " << num << " є непарним тризначним»: "
+        << (result ? "ІСТИННЕ" : "ХИБНЕ") << endl;
+}

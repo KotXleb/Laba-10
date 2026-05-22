@@ -1,0 +1,21 @@
+#ifndef LABTASKS_H
+#define LABTASKS_H
+
+// Структура для Param76
+struct TTime {
+    int Hour;
+    int Min;
+    int Sec;
+};
+
+// --- Функції обробки даних (Завдання 2) ---
+void NextSec(TTime& T);
+double GetDistance(double x1, double x2);
+bool IsOddThreeDigit(int num);
+
+// --- Функції без параметрів для меню (Завдання 3) ---
+void RunParam76();
+void RunBegin16();
+void RunBoolean17();
+
+#endif
